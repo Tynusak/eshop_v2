@@ -1,5 +1,5 @@
 import './AddToCartButton.css';
 
-export const AddToCartButton = () => {
-  return <button>Přidat do košíku</button>;
+export const AddToCartButton = ({ onAddToCart }) => {
+  return <button onClick={onAddToCart}>Přidat do košíku</button>;
 };

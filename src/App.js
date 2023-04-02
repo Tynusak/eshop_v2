@@ -13,6 +13,8 @@ import { ArticleModal } from './components/modals/ArticleModal/ArticleModal';
 function App() {
   const [page, setPage] = useState(1);
   const [data, setData] = useState();
+  const [favs, setFavs] = useState([]);
+  const [cart, setCart] = useState([]);
   const [errorMessage, setErrorMessage] = useState();
   const [openFavs, setOpenFavs] = useState(false);
   const [openCart, setOpenCart] = useState(false);
@@ -61,9 +63,16 @@ function App() {
     setOpenArticle(false);
   };
 
+  const handleCart = () => {
+    console.log('Funguju');
+  };
+
   useEffect(() => {
     loadData();
   }, [page]);
+
+  let productCount = 0;
+  let totalPriceCount = 0;
 
   return (
     <div className="App">
@@ -82,6 +91,8 @@ function App() {
             />
             <FavouritesModal isOpen={openFavs} onClose={closeFavsModal} />
             <Cart
+              totalAmount={productCount}
+              totalPrice={totalPriceCount}
               showModal={() => {
                 openCartModal();
               }}
@@ -98,6 +109,7 @@ function App() {
                 showModal={() => {
                   openArticleModal(index, item.id);
                 }}
+                onCartChange={handleCart}
               />
             ))}
             <ArticleModal

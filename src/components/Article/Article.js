@@ -1,10 +1,14 @@
 import './Article.css';
 import { FavouriteButton } from '../buttons/FavouriteButton/FavouriteButton';
 import { AddToCartButton } from '../buttons/AddToCartButton/AddToCartButton';
+import { Amount } from '../Amount/Amount';
 import { useState } from 'react';
 
-export const Article = ({ title, showModal }) => {
-  const [count, setCount] = useState(0);
+export const Article = ({ title, showModal, onCartChange }) => {
+  const [amount, setAmount] = useState(0);
+  const handleAmount = (amount) => {
+    setAmount(amount);
+  };
   return (
     <div className="article">
       <h3 className="article__title" onClick={showModal}>
@@ -12,12 +16,14 @@ export const Article = ({ title, showModal }) => {
       </h3>
       <div className="article__buttonBox">
         <FavouriteButton />
-        {count === 0 ? (
-          <AddToCartButton />
+        {amount === 0 ? (
+          <AddToCartButton
+            onAddToCart={() => {
+              setAmount(1);
+            }}
+          />
         ) : (
-          <div>
-            <button>+</button> <span>{count}</span> <button>-</button>
-          </div>
+          <Amount amount={amount} onChange={handleAmount} />
         )}
       </div>
     </div>
