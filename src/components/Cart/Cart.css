@@ -1,0 +1,10 @@
+.cart {
+  border: 1px solid black;
+  width: 30%;
+}
+
+.cart:hover,
+.cart:focus {
+  cursor: pointer;
+  background-color: rgb(78, 153, 179);
+}

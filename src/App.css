@@ -5,3 +5,16 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+.features {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.articleBox {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}

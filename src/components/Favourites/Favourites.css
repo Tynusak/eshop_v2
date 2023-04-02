@@ -1,0 +1,9 @@
+.favourites {
+  border: 1px solid black;
+  width: 30%;
+}
+.favourites:hover,
+.favourites:focus {
+  background-color: rgb(78, 153, 179);
+  cursor: pointer;
+}

@@ -1,5 +1,5 @@
 import './FavouriteButton.css';
 
 export const FavouriteButton = () => {
-  return <button>F</button>;
+  return <button>Přidat</button>;
 };
