@@ -1,5 +1,9 @@
 import './Cart.css';
 
-export const Cart = () => {
-  return <div className="cart">Košík (2) 200 Kč </div>;
+export const Cart = ({ showModal }) => {
+  return (
+    <div className="cart" onClick={showModal}>
+      Košík (2) 200 Kč{' '}
+    </div>
+  );
 };
