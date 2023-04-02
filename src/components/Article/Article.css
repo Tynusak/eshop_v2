@@ -13,6 +13,11 @@
 .article__title {
   width: 100%;
 }
+.article__title:hover,
+.article__title:focus {
+  color: blue;
+  cursor: pointer;
+}
 
 .article__buttonBox {
   width: 100%;

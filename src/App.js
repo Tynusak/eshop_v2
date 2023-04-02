@@ -6,11 +6,13 @@ import { Favourites } from './components/Favourites/Favourites';
 import { Cart } from './components/Cart/Cart';
 import { LoadNextPageButton } from './components/buttons/LoadNextPageButton/LoadNextPageButton';
 import { Article } from './components/Article/Article';
+import { ArticleModal } from './components/modals/ArticleModal/ArticleModal';
 
 function App() {
   const [page, setPage] = useState(1);
   const [data, setData] = useState();
   const [errorMessage, setErrorMessage] = useState();
+  const [openArticle, setOpenArticle] = useState(false);
   const handleLoading = () => {
     const newPage = page + 1;
     setPage(newPage);
@@ -26,6 +28,13 @@ function App() {
       setErrorMessage(error.message);
       console.log(errorMessage);
     }
+  };
+
+  const openArticleModal = () => {
+    setOpenArticle(true);
+  };
+  const closeArticleModal = () => {
+    setOpenArticle(false);
   };
 
   useEffect(() => {
@@ -46,9 +55,16 @@ function App() {
             <LoadNextPageButton onLoadNextPage={handleLoading} />
           </div>
           <div className="articleBox">
-            {data.map((item) => {
-              return <Article key={item.id} title={item.title.rendered} />;
-            })}
+            {data.map((item) => (
+              <Article
+                key={item.id}
+                title={item.title.rendered}
+                showModal={() => {
+                  openArticleModal();
+                }}
+              />
+            ))}
+            <ArticleModal isOpen={openArticle} onClose={closeArticleModal} />
           </div>
         </>
       )}
