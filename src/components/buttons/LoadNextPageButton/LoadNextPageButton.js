@@ -1,4 +1,8 @@
 import './LoadNextPageButton.css';
-export const LoadNextPageButton = () => {
-  return <button className="loadNextPageButton">Načíst další</button>;
+export const LoadNextPageButton = ({ onLoadNextPage }) => {
+  return (
+    <button className="loadNextPageButton" onClick={onLoadNextPage}>
+      Načíst další
+    </button>
+  );
 };
