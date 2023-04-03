@@ -13,7 +13,6 @@ export const ArticleModal = ({ isOpen, id, onClose }) => {
         `https://techcrunch.com/wp-json/wp/v2/posts/${id}`,
       );
       setArticle(response.data);
-      console.log(article);
     } catch (error) {
       setErrorMessage(error.message);
       console.log(errorMessage);

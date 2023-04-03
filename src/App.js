@@ -13,26 +13,37 @@ import { ArticleModal } from './components/modals/ArticleModal/ArticleModal';
 function App() {
   const [page, setPage] = useState(1);
   const [data, setData] = useState();
-  const [favs, setFavs] = useState([]);
-  const [cart, setCart] = useState([]);
+  const [modalData, setModalData] = useState([]);
   const [errorMessage, setErrorMessage] = useState();
   const [openFavs, setOpenFavs] = useState(false);
   const [openCart, setOpenCart] = useState(false);
   const [openArticle, setOpenArticle] = useState(false);
   const [id, setId] = useState('');
+
   const handleLoading = () => {
     const newPage = page + 1;
     setPage(newPage);
   };
+
   const loadData = async () => {
     try {
       const response = await axios.get(
         `https://techcrunch.com/wp-json/wp/v2/posts?per_page=9&page=${page}&context=embed`,
       );
+
       setData(response.data);
-      console.log(data[0]);
+
+      const defaults = response.data.map((item) => ({
+        id: item.id,
+        title: item.title.rendered,
+        inFavs: false,
+        amount: 0,
+      }));
+
+      const newModalData = [...modalData, ...defaults];
+      setModalData(newModalData);
     } catch (error) {
-      setErrorMessage(error.message);
+      setErrorMessage(error?.message);
       console.log(errorMessage);
     }
   };
@@ -66,7 +77,6 @@ function App() {
   const handleCart = () => {
     console.log('Funguju');
   };
-
   useEffect(() => {
     loadData();
   }, [page]);
@@ -89,7 +99,11 @@ function App() {
                 openFavsModal();
               }}
             />
-            <FavouritesModal isOpen={openFavs} onClose={closeFavsModal} />
+            <FavouritesModal
+              isOpen={openFavs}
+              onClose={closeFavsModal}
+              data={modalData}
+            />
             <Cart
               totalAmount={productCount}
               totalPrice={totalPriceCount}
@@ -97,7 +111,13 @@ function App() {
                 openCartModal();
               }}
             />
-            <CartModal isOpen={openCart} onClose={closeCartModal} />
+            <CartModal
+              isOpen={openCart}
+              onClose={closeCartModal}
+              data={modalData}
+              totalAmount={productCount}
+              totalPrice={totalPriceCount}
+            />
 
             <LoadNextPageButton onLoadNextPage={handleLoading} />
           </div>
