@@ -2,7 +2,7 @@ import Modal from 'react-modal';
 import { FavItem } from '../../FavItem/FavItem';
 
 export const FavouritesModal = ({ isOpen, onClose, data }) => {
-  const isFav = data.filter((item) => item.isFav);
+  const isFav = data.filter((item) => item.inFavs);
   return (
     <Modal isOpen={isOpen}>
       {isFav.length === 0 ? (

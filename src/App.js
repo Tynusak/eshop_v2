@@ -12,7 +12,7 @@ import { ArticleModal } from './components/modals/ArticleModal/ArticleModal';
 
 function App() {
   const [page, setPage] = useState(1);
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const [modalData, setModalData] = useState([]);
   const [errorMessage, setErrorMessage] = useState();
   const [openFavs, setOpenFavs] = useState(false);
@@ -33,7 +33,7 @@ function App() {
 
       setData(response.data);
 
-      const defaults = response.data.map((item) => ({
+      const defaults = response?.data.map((item) => ({
         id: item.id,
         title: item.title.rendered,
         inFavs: false,
@@ -72,6 +72,12 @@ function App() {
   };
   const closeArticleModal = () => {
     setOpenArticle(false);
+  };
+
+  const handleFavs = (index) => {
+    const favItems = [...modalData];
+    favItems[index].inFavs = !modalData[index].inFavs;
+    setModalData(favItems);
   };
 
   const handleCart = (index, cartAmount) => {
@@ -126,25 +132,37 @@ function App() {
             <LoadNextPageButton onLoadNextPage={handleLoading} />
           </div>
           <div className="articleBox">
-            {modalData?.map((item, index) => (
+            {data?.map((item, index) => (
               <Article
                 key={item.id}
-                title={item.title}
                 showModal={() => {
                   openArticleModal(index, item.id);
                 }}
-                amount={item.amount}
-                onCartChange={(cartAmount) => handleCart(index, cartAmount)}
+                data={modalData?.find((article) => article.id === item.id)}
+                onCartChange={(cartAmount) =>
+                  handleCart(
+                    modalData?.findIndex((article) => article.id === item.id),
+                    cartAmount,
+                  )
+                }
+                onFavChange={() =>
+                  handleFavs(
+                    modalData?.findIndex((article) => article.id === item.id),
+                  )
+                }
               />
             ))}
             <ArticleModal
               isOpen={openArticle}
               id={id}
               onClose={closeArticleModal}
-              cartItem={modalData.find((item) => item.id === id)}
+              cartItem={modalData?.find((item) => item.id === id)}
+              onFavChange={() =>
+                handleFavs(modalData?.findIndex((item) => item.id === id))
+              }
               onCartChange={(cartAmount) =>
                 handleCart(
-                  modalData.findIndex((item) => item.id === id),
+                  modalData?.findIndex((item) => item.id === id),
                   cartAmount,
                 )
               }

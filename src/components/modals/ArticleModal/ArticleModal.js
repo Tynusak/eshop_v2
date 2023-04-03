@@ -11,6 +11,7 @@ export const ArticleModal = ({
   onClose,
   cartItem,
   onCartChange,
+  onFavChange,
 }) => {
   const [article, setArticle] = useState();
   const [errorMessage, setErrorMessage] = useState();
@@ -45,7 +46,7 @@ export const ArticleModal = ({
             <p>Cena: {article?.id} Kč</p>
           </div>
           <div>
-            <FavouriteButton />
+            <FavouriteButton isFav={cartItem?.inFavs} onChange={onFavChange} />
             {cartItem?.amount === 0 ? (
               <AddToCartButton onAddToCart={() => onCartChange(1)} />
             ) : (

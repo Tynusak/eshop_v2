@@ -15,12 +15,15 @@ export const CartModal = ({
         <p>Košík je prázdný</p>
       ) : (
         <table>
-          <thead></thead>
-          <tr>
-            <th>Článek</th>
-            <th>Množství</th>
-            <th>Cena</th>
-          </tr>
+          <thead>
+            {' '}
+            <tr>
+              <th>Článek</th>
+              <th>Množství</th>
+              <th>Cena</th>
+            </tr>
+          </thead>
+
           <tbody>
             {inCart?.map((item) => (
               <CartItem
@@ -42,6 +45,7 @@ export const CartModal = ({
       )}
 
       <div>
+        <button>Koupit</button>
         <button onClick={onClose}>Zavřít</button>
       </div>
     </Modal>
