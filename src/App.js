@@ -74,8 +74,10 @@ function App() {
     setOpenArticle(false);
   };
 
-  const handleCart = () => {
-    console.log('Funguju');
+  const handleCart = (index, cartAmount) => {
+    const cartItems = [...modalData];
+    cartItems[index].amount = cartAmount;
+    setModalData(cartItems);
   };
   useEffect(() => {
     loadData();
@@ -83,10 +85,12 @@ function App() {
 
   let productCount = 0;
   let totalPriceCount = 0;
+  modalData.forEach((item) => (productCount += item.amount));
+  modalData.forEach((item) => (totalPriceCount += item.id * item.amount));
 
   return (
     <div className="App">
-      <h1>Techcrunch</h1>
+      <h1>Techcrunch articles</h1>
 
       {!data ? (
         <p>Loading..</p>
@@ -122,20 +126,28 @@ function App() {
             <LoadNextPageButton onLoadNextPage={handleLoading} />
           </div>
           <div className="articleBox">
-            {data?.map((item, index) => (
+            {modalData?.map((item, index) => (
               <Article
                 key={item.id}
-                title={item.title.rendered}
+                title={item.title}
                 showModal={() => {
                   openArticleModal(index, item.id);
                 }}
-                onCartChange={handleCart}
+                amount={item.amount}
+                onCartChange={(cartAmount) => handleCart(index, cartAmount)}
               />
             ))}
             <ArticleModal
               isOpen={openArticle}
               id={id}
               onClose={closeArticleModal}
+              cartItem={modalData.find((item) => item.id === id)}
+              onCartChange={(cartAmount) =>
+                handleCart(
+                  modalData.findIndex((item) => item.id === id),
+                  cartAmount,
+                )
+              }
             />
           </div>
         </>

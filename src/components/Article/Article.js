@@ -4,11 +4,7 @@ import { AddToCartButton } from '../buttons/AddToCartButton/AddToCartButton';
 import { Amount } from '../Amount/Amount';
 import { useState } from 'react';
 
-export const Article = ({ title, showModal, onCartChange }) => {
-  const [amount, setAmount] = useState(0);
-  const handleAmount = (amount) => {
-    setAmount(amount);
-  };
+export const Article = ({ title, showModal, onCartChange, amount }) => {
   return (
     <div className="article">
       <h3 className="article__title" onClick={showModal}>
@@ -19,11 +15,11 @@ export const Article = ({ title, showModal, onCartChange }) => {
         {amount === 0 ? (
           <AddToCartButton
             onAddToCart={() => {
-              setAmount(1);
+              onCartChange(1);
             }}
           />
         ) : (
-          <Amount amount={amount} onChange={handleAmount} />
+          <Amount amount={amount} onChange={onCartChange} />
         )}
       </div>
     </div>

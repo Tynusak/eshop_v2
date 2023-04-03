@@ -3,10 +3,18 @@ import axios from 'axios';
 import Modal from 'react-modal';
 import { FavouriteButton } from '../../buttons/FavouriteButton/FavouriteButton';
 import { AddToCartButton } from '../../buttons/AddToCartButton/AddToCartButton';
+import { Amount } from '../../Amount/Amount';
 
-export const ArticleModal = ({ isOpen, id, onClose }) => {
+export const ArticleModal = ({
+  isOpen,
+  id,
+  onClose,
+  cartItem,
+  onCartChange,
+}) => {
   const [article, setArticle] = useState();
   const [errorMessage, setErrorMessage] = useState();
+
   const loadArticle = async (id) => {
     try {
       const response = await axios.get(
@@ -34,10 +42,15 @@ export const ArticleModal = ({ isOpen, id, onClose }) => {
             <a href={article.link} target="_blank">
               Otevřít článek
             </a>
+            <p>Cena: {article?.id} Kč</p>
           </div>
           <div>
             <FavouriteButton />
-            <AddToCartButton />
+            {cartItem?.amount === 0 ? (
+              <AddToCartButton onAddToCart={() => onCartChange(1)} />
+            ) : (
+              <Amount amount={cartItem?.amount} onChange={onCartChange} />
+            )}
           </div>
         </>
       )}
