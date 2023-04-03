@@ -14,38 +14,42 @@ export const CartModal = ({
       {inCart.length === 0 ? (
         <p>Košík je prázdný</p>
       ) : (
-        <table>
-          <thead>
-            {' '}
-            <tr>
-              <th>Článek</th>
-              <th>Množství</th>
-              <th>Cena</th>
-            </tr>
-          </thead>
+        <>
+          <table>
+            <thead>
+              {' '}
+              <tr>
+                <th>Článek</th>
+                <th>Množství</th>
+                <th>Cena</th>
+              </tr>
+            </thead>
 
-          <tbody>
-            {inCart?.map((item) => (
-              <CartItem
-                key={item.id}
-                title={item.title}
-                price={item.id}
-                amount={item.amount}
-              />
-            ))}
-          </tbody>
-          <tfoot>
-            <tr>
-              <th></th>
-              <th>{totalAmount} ks</th>
-              <th>{totalPrice} Kč</th>
-            </tr>
-          </tfoot>
-        </table>
+            <tbody>
+              {inCart?.map((item) => (
+                <CartItem
+                  key={item.id}
+                  title={item.title}
+                  price={item.id}
+                  amount={item.amount}
+                />
+              ))}
+            </tbody>
+            <tfoot>
+              <tr>
+                <th></th>
+                <th>{totalAmount} ks</th>
+                <th>{totalPrice} Kč</th>
+              </tr>
+            </tfoot>
+          </table>
+          <div>
+            <button>Koupit</button>
+          </div>
+        </>
       )}
 
       <div>
-        <button>Koupit</button>
         <button onClick={onClose}>Zavřít</button>
       </div>
     </Modal>

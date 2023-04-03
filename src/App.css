@@ -11,6 +11,9 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+.search {
+  width: 30%;
+}
 
 .articleBox {
   width: 100%;

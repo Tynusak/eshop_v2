@@ -104,6 +104,7 @@ function App() {
         <>
           <div className="features">
             <Search />
+
             <Favourites
               showModal={() => {
                 openFavsModal();
