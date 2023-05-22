@@ -15,14 +15,18 @@ export const ArticleModal = ({
 }) => {
   const [article, setArticle] = useState();
   const [errorMessage, setErrorMessage] = useState();
+  const [loading, setLoading] = useState(false);
 
   const loadArticle = async (id) => {
     try {
+      setLoading(true);
       const response = await axios.get(
         `https://techcrunch.com/wp-json/wp/v2/posts/${id}`,
       );
+      setLoading(false);
       setArticle(response.data);
     } catch (error) {
+      setLoading(false);
       setErrorMessage(error.message);
       console.log(errorMessage);
     }
@@ -32,15 +36,15 @@ export const ArticleModal = ({
   }, [id]);
   return (
     <Modal isOpen={isOpen}>
-      {!article ? (
+      {loading ? (
         <p>Loading..</p>
       ) : (
         <>
           <div>
-            <h3>{article?.parselyMeta?.['parsely-title']}</h3>
-            <h4>Written by {article?.parselyMeta?.['parsely-author']}</h4>
+            <h3>{article?.title?.rendered}</h3>
+            <h4>Written by {article?.author}</h4>
             <p>{article?.date}</p>
-            <a href={article.link} target="_blank">
+            <a href={article?.link} target="_blank">
               Otevřít článek
             </a>
             <p>Cena: {article?.id} Kč</p>

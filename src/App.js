@@ -19,17 +19,19 @@ function App() {
   const [openCart, setOpenCart] = useState(false);
   const [openArticle, setOpenArticle] = useState(false);
   const [id, setId] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleLoading = () => {
-    const newPage = page + 1;
-    setPage(newPage);
+    setPage((page) => page + 1);
   };
 
   const loadData = async () => {
     try {
+      setLoading(true);
       const response = await axios.get(
         `https://techcrunch.com/wp-json/wp/v2/posts?per_page=9&page=${page}&context=embed`,
       );
+      setLoading(false);
 
       setData(response.data);
 
@@ -43,6 +45,7 @@ function App() {
       const newModalData = [...modalData, ...defaults];
       setModalData(newModalData);
     } catch (error) {
+      setLoading(false);
       setErrorMessage(error?.message);
       console.log(errorMessage);
     }
@@ -98,7 +101,7 @@ function App() {
     <div className="App">
       <h1>Techcrunch articles</h1>
 
-      {!data ? (
+      {loading ? (
         <p>Loading..</p>
       ) : (
         <>
